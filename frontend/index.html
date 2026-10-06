@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#11142b">
+<title>BhashaBridge — Context-aware translation for India</title>
+<meta name="description" content="BhashaBridge translates Indian languages with context, tone, conversation and speech.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Noto+Sans+Bengali:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Kannada:wght@400;600&family=Noto+Sans+Malayalam:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Sans+Telugu:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#f7f8fc;--surface:#fff;--surface2:#f1f3f9;--ink:#12152f;--muted:#68708c;--line:#e4e7f0;
+ --brand:#5b50d6;--brand2:#7a6ff0;--teal:#1d9b8a;--gold:#e69a45;--danger:#d95368;
+ --shadow:0 20px 55px rgba(22,25,55,.09);--radius:22px;--sidebar:258px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif}
+button,input,textarea,select{font:inherit} button{cursor:pointer} button:disabled{cursor:not-allowed;opacity:.6}
+a{color:inherit;text-decoration:none}.hidden{display:none!important}
+.app{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar);background:#11142b;color:#fff;padding:22px 16px;z-index:50;display:flex;flex-direction:column}
+.logo{display:flex;align-items:center;gap:11px;padding:5px 10px 22px}.logo-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#7d72f3,#4f45c8);display:grid;place-items:center;box-shadow:0 8px 22px #5147c555}.logo-mark svg{width:23px}.logo-name{font-family:Manrope;font-weight:800;font-size:18px;line-height:1}.logo-sub{font-size:9px;color:#9da3c1;margin-top:4px}
+.nav-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#777e9e;padding:18px 11px 8px}.nav{display:grid;gap:4px}.nav button{border:0;background:transparent;color:#aeb4d0;text-align:left;border-radius:12px;padding:11px 12px;display:flex;align-items:center;gap:11px;font-weight:600;font-size:13px}.nav button:hover{background:#ffffff0d;color:#fff}.nav button.active{background:linear-gradient(90deg,#5b50d6,#5148c4);color:#fff;box-shadow:0 8px 20px #4f46c544}.nav svg{width:18px;height:18px;opacity:.9}
+.side-bottom{margin-top:auto}.profile-mini{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #ffffff14;background:#ffffff08;border-radius:14px}.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#f0b26a,#705fe0);display:grid;place-items:center;font-weight:800}.profile-mini small{display:block;color:#8f96b3;font-size:10px;margin-top:2px}
+.main{margin-left:var(--sidebar);min-height:100vh}.topbar{height:72px;background:#ffffffd9;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;z-index:40}.crumb{font-size:13px;color:var(--muted)}.crumb strong{color:var(--ink)}.top-actions{display:flex;align-items:center;gap:10px}.icon-btn{width:38px;height:38px;border:1px solid var(--line);background:var(--surface);border-radius:11px;display:grid;place-items:center;color:var(--muted)}.icon-btn:hover{border-color:#c9cce0;color:var(--ink)}.mobile-menu{display:none}
+.page{display:none;max-width:1280px;margin:auto;padding:36px 34px 70px}.page.active{display:block}.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#eeecff;color:#5147bd;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:800;letter-spacing:.04em}.dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px #1d9b8a18}
+h1,h2,h3{font-family:Manrope;margin:0}h1{font-size:38px;line-height:1.08;letter-spacing:-.04em}h2{font-size:26px;letter-spacing:-.025em}h3{font-size:16px}.sub{color:var(--muted);line-height:1.7;font-size:14px}.page-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:28px}.page-head .sub{max-width:650px;margin-top:8px}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:11px 15px;font-weight:700;font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn:hover{border-color:#c9cce0;transform:translateY(-1px)}.btn-primary{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:0 10px 25px #12152f20}.btn-primary:hover{background:#24284c}.btn-brand{background:var(--brand);border-color:var(--brand);color:#fff}.btn-danger{color:var(--danger);border-color:#f0d5db;background:#fff}.btn-sm{padding:8px 11px;font-size:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 5px 20px #15193205}.card-pad{padding:22px}
+.grid{display:grid;gap:18px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.stat{padding:19px}.stat-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px;font-weight:700}.stat-value{font-family:Manrope;font-size:28px;margin-top:9px}.stat-note{font-size:11px;color:var(--teal);margin-top:5px}
+.hero{display:grid;grid-template-columns:1.04fr .96fr;gap:26px;align-items:stretch;margin-top:18px}.hero-copy{padding:24px 0}.hero h1{font-size:55px;max-width:700px}.hero h1 span{color:var(--brand)}.hero .sub{font-size:16px;max-width:650px;margin:18px 0 25px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.hero-stats{display:flex;gap:28px;margin-top:30px}.hero-stats strong{font-family:Manrope;font-size:20px}.hero-stats span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.preview{position:relative;background:linear-gradient(145deg,#171a37,#292b55);border-radius:28px;padding:18px;box-shadow:var(--shadow);overflow:hidden}.preview:before{content:"";position:absolute;width:240px;height:240px;background:#6e63f355;filter:blur(50px);right:-60px;top:-80px}.preview-card{position:relative;background:#fff;border-radius:20px;padding:17px;color:var(--ink);margin-top:22px}.preview-head{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}.pill{border:1px solid var(--line);border-radius:999px;padding:6px 9px;background:#fff;font-size:11px;font-weight:700}.pill.brand{background:#eeecff;color:#5147bd;border-color:#ddd9ff}.bubble{padding:13px;border-radius:14px;margin-top:12px;background:#f3f4fa;font-size:13px}.bubble.out{background:#fff7ec;border-left:3px solid var(--gold)}.bubble .indic{font-size:16px;font-weight:700}.preview-context{display:flex;align-items:center;gap:7px;color:#66708d;font-size:10px;margin-top:12px}
+.section{margin-top:54px}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:17px}.section-head p{margin:5px 0 0}.feature{padding:21px}.feature-icon{width:42px;height:42px;border-radius:13px;background:#f0efff;color:var(--brand);display:grid;place-items:center;margin-bottom:14px}.feature p{font-size:12px;line-height:1.65;color:var(--muted);margin:7px 0 0}
+.lang-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.lang{padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:#fff}.lang b{font-size:12px}.lang span{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.translator{display:grid;grid-template-columns:1fr 1fr;gap:16px}.editor{min-height:310px;padding:18px}.editor-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.select{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 11px;font-weight:700;color:var(--ink);outline:0}.select:focus,textarea:focus,input:focus{border-color:#9b94ef;box-shadow:0 0 0 3px #6b5ff018}.textarea{width:100%;min-height:190px;resize:vertical;border:1px solid var(--line);border-radius:14px;padding:15px;outline:0;background:#fafbfe;color:var(--ink);line-height:1.7}.editor-foot{display:flex;justify-content:space-between;align-items:center;margin-top:11px;color:#9299ae;font-size:11px}.tools{display:flex;gap:6px}.tool{width:34px;height:34px;border:1px solid var(--line);border-radius:10px;background:#fff;display:grid;place-items:center;color:var(--muted)}.tool:hover{color:var(--brand);border-color:#c9c4f5}.output{min-height:190px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:15px;line-height:1.7;font-size:16px}.output.empty{background:#f7f8fc;color:#a2a7ba;display:flex;align-items:center}.translit{margin-top:12px;padding:10px 12px;background:#f4f5fb;border-radius:11px;color:#666e88;font-size:12px}.translate-bar{display:flex;justify-content:center;margin:17px 0}.context-card{margin-top:17px}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:999px;padding:8px 11px;font-size:11px;font-weight:700}.chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}.context-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:15px}.context-item{background:#f7f8fc;border-radius:13px;padding:12px}.context-item label{font-size:9px;letter-spacing:.1em;color:#9096aa;font-weight:800}.context-item div{font-size:12px;font-weight:700;margin-top:4px}.confidence{height:6px;background:#e7e9f0;border-radius:999px;overflow:hidden;margin-top:8px}.confidence i{display:block;height:100%;background:var(--teal);border-radius:999px;width:0;transition:width .7s}
+.panel{padding:22px}.dropzone{border:1.5px dashed #cfd3e0;border-radius:18px;padding:45px 20px;text-align:center;background:#fafbfe}.dropzone.drag{border-color:var(--brand);background:#f1efff}.drop-icon{width:58px;height:58px;border-radius:17px;background:#eeecff;color:var(--brand);display:grid;place-items:center;margin:0 auto 13px}.dropzone h3{margin-bottom:6px}.dropzone p{margin:0;color:var(--muted);font-size:12px}.preview-image{max-width:100%;max-height:260px;border-radius:14px;display:block;margin:auto}.pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}.step{padding:10px;border:1px solid var(--line);border-radius:12px;color:#9399ad;font-size:10px;font-weight:700}.step.done{color:var(--teal);background:#effaf8}.step.active{color:var(--brand);background:#f1efff}
+.chat-shell{display:grid;grid-template-columns:220px 1fr;gap:16px}.chat-settings{padding:17px}.field{display:grid;gap:6px;margin-bottom:14px}.field label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#9096aa;font-weight:800}.chat{display:flex;flex-direction:column;height:650px}.chat-head{padding:15px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.chat-body{flex:1;overflow:auto;padding:22px;background:#fafbfe;display:flex;flex-direction:column;gap:14px}.msg{max-width:75%;padding:13px 15px;border-radius:17px;font-size:13px;line-height:1.55}.msg.a{align-self:flex-start;background:#eeecff}.msg.b{align-self:flex-end;background:#151936;color:#fff}.msg small{display:block;margin-top:7px;opacity:.6;font-size:9px}.chat-input{padding:13px;border-top:1px solid var(--line);display:flex;gap:8px}.chat-input input{flex:1;border:1px solid var(--line);border-radius:12px;padding:12px;outline:0}
+.speech-center{text-align:center;max-width:780px;margin:auto}.mic{width:116px;height:116px;border:0;border-radius:50%;background:#141733;color:#fff;display:grid;place-items:center;margin:30px auto 12px;box-shadow:0 0 0 12px #5b50d60e,0 18px 45px #12152f20;position:relative}.mic.recording{background:var(--danger);animation:mic 1.5s infinite}.mic svg{width:34px}@keyframes mic{50%{box-shadow:0 0 0 25px #d9536810,0 18px 45px #12152f20}}
+.wave{height:38px;display:flex;justify-content:center;align-items:center;gap:4px}.wave i{width:3px;height:7px;background:var(--brand);border-radius:4px;animation:w .8s ease-in-out infinite}.wave i:nth-child(2n){animation-delay:.1s}.wave i:nth-child(3n){animation-delay:.2s}@keyframes w{50%{height:29px}}
+.result-card{margin-top:24px;text-align:left}.result-row{padding:15px 0;border-bottom:1px solid var(--line)}.result-row:last-child{border-bottom:0}.result-row label{font-size:9px;color:#9096aa;letter-spacing:.1em;font-weight:800}.result-row p{margin:6px 0 0;font-size:14px}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:12px}.table th{text-align:left;color:#8b92a8;font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:12px;border-bottom:1px solid var(--line)}.table td{padding:14px 12px;border-bottom:1px solid #eef0f5}.table tr:hover td{background:#fafbfe}.truncate{max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.saved-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.saved-card{padding:18px}.saved-arrow{text-align:center;color:#b1b5c5;margin:7px}.saved-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.mini-pill{font-size:9px;background:#f3f4f8;color:#707892;border-radius:999px;padding:5px 7px}
+.settings{display:grid;grid-template-columns:220px 1fr;gap:16px}.settings-nav button{display:block;width:100%;text-align:left;background:transparent;border:0;padding:11px;border-radius:10px;font-weight:700;color:var(--muted);font-size:12px}.settings-nav button.active{background:#eeecff;color:#5147bd}.setting-row{display:flex;justify-content:space-between;gap:25px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line)}.setting-row:last-child{border:0}.setting-row p{margin:4px 0 0;color:var(--muted);font-size:11px;line-height:1.5}.toggle{width:42px;height:24px;border:0;border-radius:99px;background:#d9dce6;padding:3px}.toggle i{display:block;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}.toggle.on{background:var(--brand)}.toggle.on i{transform:translateX(18px)}
+.about-hero{background:linear-gradient(135deg,#141733,#272a55);color:#fff;padding:40px;border-radius:25px}.about-hero p{max-width:730px;color:#b8bdd4;line-height:1.8}.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.timeline div{padding:18px;background:#fff;border:1px solid var(--line);border-radius:17px}.timeline b{font-size:12px;color:var(--brand)}.timeline p{font-size:11px;line-height:1.6;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:#12152f;color:#fff;border-radius:12px;padding:12px 16px;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.25s;z-index:100}.toast.show{opacity:1;transform:translate(-50%,0)}
+.modal{position:fixed;inset:0;background:#10132d88;backdrop-filter:blur(5px);z-index:80;display:none;place-items:center;padding:20px}.modal.open{display:grid}.modal-card{background:#fff;border-radius:22px;padding:25px;width:min(430px,100%);box-shadow:var(--shadow)}.modal-card h2{margin-bottom:5px}.modal-card p{color:var(--muted);font-size:12px;line-height:1.6}.form{display:grid;gap:10px;margin-top:18px}.form input{border:1px solid var(--line);border-radius:11px;padding:12px;outline:0}.form .btn{width:100%}
+.footer{padding:45px 34px;background:#11142b;color:#fff;margin-left:var(--sidebar)}.footer-inner{max-width:1280px;margin:auto;display:flex;justify-content:space-between;gap:30px}.footer p{color:#9298b3;font-size:11px}
+@media(max-width:1050px){:root{--sidebar:78px}.sidebar{width:78px}.logo{justify-content:center;padding-left:0;padding-right:0}.logo-name,.logo-sub,.nav-label,.nav button span,.profile-mini .profile-text{display:none}.nav button{justify-content:center}.profile-mini{justify-content:center}.main,.footer{margin-left:78px}.hero{grid-template-columns:1fr}.hero h1{font-size:47px}.grid-4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){:root{--sidebar:0px}.sidebar{display:none}.main,.footer{margin-left:0}.topbar{padding:0 16px}.mobile-menu{display:grid;place-items:center}.page{padding:25px 16px 55px}.hero h1{font-size:39px}.hero-stats{gap:18px}.translator,.grid-2,.grid-3,.saved-grid,.settings,.chat-shell{grid-template-columns:1fr}.lang-grid{grid-template-columns:repeat(2,1fr)}.context-grid,.pipeline,.timeline{grid-template-columns:1fr 1fr}.page-head{align-items:start;flex-direction:column}.chat{height:620px}.msg{max-width:88%}.footer{padding:35px 16px}.footer-inner{flex-direction:column}.top-actions .desktop-action{display:none}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <button class="logo" onclick="go('home')" aria-label="Go home" style="border:0;background:transparent;color:inherit;text-align:left">
+    <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M6 12c0-3.4 2.7-6 6-6s6 2.6 6 6-2.7 6-6 6-6-2.6-6-6Z" stroke="white" stroke-width="1.5"/><path d="M12 6v12M6 12h12" stroke="white" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="2" fill="#E69A45"/></svg></div>
+    <div><div class="logo-name">BhashaBridge</div><div class="logo-sub">INDIAN LANGUAGE AI</div></div>
+  </button>
+  <div class="nav-label">Workspace</div>
+  <div class="nav">
+    <button data-page="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none"><path d="m4 11 8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-8Z" stroke="currentColor" stroke-width="1.8"/></svg><span>Overview</span></button>
+    <button data-page="translator" onclick="go('translator')"><svg viewBox="0 0 24 24" fill="none"><path d="M5 6h7M8 4v2m-3 9 3-6 3 6m-5-2h4M14 6h5m-2 0c0 5-2 9-6 12m3-5 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Translator</span></button>
+    <button data-page="conversation" onclick="go('conversation')"><svg viewBox="0 0 24 24" fill="none"><path d="M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-4 3v-3H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8"/></svg><span>Conversation</span></button>
+    <button data-page="speech" onclick="go('speech')"><svg viewBox="0 0 24 24" fill="none"><rect x="8" y="3" width="8" height="12" rx="4" stroke="currentColor" stroke-width="1.8"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-3 0h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Speech</span></button>
+  </div>
+  <div class="nav-label">Library</div>
+  <div class="nav">
+    <button data-page="history" onclick="go('history')"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 0 2.3-5.6L4 8.7M4 4v4.7h4.7M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>History</span></button>
+    <button data-page="saved" onclick="go('saved')"><svg viewBox="0 0 24 24" fill="none"><path d="m12 19-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v18l-7-4Z" stroke="currentColor" stroke-width="1.8"/></svg><span>Saved</span></button>
+    <button data-page="settings" onclick="go('settings')"><svg viewBox="0 0 24 24" fill="none"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path d="m19.4 15 .1.1-1.8 3.1-.2-.1-2-.8a7.8 7.8 0 0 1-1.8 1l-.3 2.1H10l-.3-2.1a7.8 7.8 0 0 1-1.8-1l-2 .8-.2.1-1.8-3.1.1-.1 1.7-1.3a8 8 0 0 1 0-2.1L4 10.3l-.1-.1 1.8-3.1.2.1 2 .8a7.8 7.8 0 0 1 1.8-1L10 4.9h3.6l.3 2.1a7.8 7.8 0 0 1 1.8 1l2-.8.2-.1 1.8 3.1-.1.1-1.7 1.3a8 8 0 0 1 0 2.1l1.7 1.3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span>Settings</span></button>
+    <button data-page="about" onclick="go('about')"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5m0-8v.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>About</span></button>
+  </div>
+  <div class="side-bottom"><div class="profile-mini"><div class="avatar" id="avatar">B</div><div class="profile-text"><b id="sideName">Guest User</b><small>Demo workspace</small></div></div></div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="icon-btn mobile-menu" onclick="toggleMobile()" aria-label="Open navigation">☰</button>
+    <div class="crumb">Workspace <span style="margin:0 5px;color:#b5bac9">/</span> <strong id="crumb">Overview</strong></div>
+  </div>
+  <div class="top-actions">
+    <button class="btn btn-sm desktop-action" onclick="openModal()">Sign in</button>
+    <button class="btn btn-primary btn-sm" onclick="go('translator')">New translation <b>+</b></button>
+  </div>
+</header>
+
+<!-- HOME -->
+<section class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow"><i class="dot"></i> CONTEXT-AWARE • MULTIMODAL • INDIA</span>
+      <h1 style="margin-top:18px">Translation that understands <span>what you mean.</span></h1>
+      <p class="sub">BhashaBridge combines language understanding with conversation context, tone and multimodal input to make Indian-language translation feel natural—not mechanical.</p>
+      <div class="hero-actions"><button class="btn btn-primary" onclick="go('translator')">Start translating →</button><button class="btn" onclick="go('conversation')">Try conversation mode</button></div>
+      <div class="hero-stats"><div><strong>13</strong><span>supported languages</span></div><div><strong>4</strong><span>input modes</span></div><div><strong>12+</strong><span>Indian languages</span></div></div>
+    </div>
+    <div class="preview">
+      <div style="position:relative;color:#aeb4d0;font-size:10px;font-weight:800;letter-spacing:.1em">LIVE TRANSLATION PREVIEW</div>
+      <div class="preview-card">
+        <div class="preview-head"><span class="pill brand">English</span><span>→</span><span class="pill">Telugu · తెలుగు</span></div>
+        <div class="bubble">“Are you coming tomorrow?”</div>
+        <div class="bubble out"><div class="indic">మీరు రేపు వస్తున్నారా?</div><small style="color:#777f98">Meeru repu vastunnara?</small></div>
+        <div class="preview-context"><span class="dot"></span><b style="color:#343957">Context understood</b> · Casual conversation · 96%</div>
+        <div style="display:flex;justify-content:flex-end;gap:7px;margin-top:13px"><button class="tool" onclick="speakText('మీరు రేపు వస్తున్నారా?')">🔊</button><button class="tool" onclick="copyText('మీరు రేపు వస్తున్నారా?')">⧉</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="section"><div class="section-head"><div><h2>One bridge. Every mode.</h2><p class="sub">Switch between text, voice and conversations without changing your workflow.</p></div></div>
+    <div class="grid grid-3">
+      <div class="card feature"><div class="feature-icon">✦</div><h3>Context engine</h3><p>Uses surrounding messages, domain, tone and style to preserve intent instead of translating isolated words.</p></div>
+      <div class="card feature"><div class="feature-icon">◉</div><h3>Indian language first</h3><p>Built around Indian scripts, transliteration and natural conversational phrasing across major Indian languages.</p></div>
+      <div class="card feature"><div class="feature-icon">⌁</div><h3>Multimodal by design</h3><p>Translate typed text, speech and conversations through one consistent experience.</p></div>
+    </div>
+  </div>
+  <div class="section"><div class="section-head"><div><h2>Languages at a glance</h2><p class="sub">Select any language instantly from the translator.</p></div><button class="btn btn-sm" onclick="go('translator')">Open translator</button></div><div class="lang-grid" id="homeLangs"></div></div>
+</section>
+
+<!-- TRANSLATOR -->
+<section class="page" id="page-translator">
+  <div class="page-head"><div><span class="eyebrow">TRANSLATION WORKSPACE</span><h1 style="margin-top:11px">Context-aware translator</h1><p class="sub">Give the model a little context. Get a much better translation. <span class="pill brand">Groq AI + MongoDB</span></p></div><button class="btn" onclick="clearTranslator()">Clear</button></div>
+  <div class="translator">
+    <div class="card editor"><div class="editor-head"><select class="select" id="srcLang"><option value="auto">Auto detect</option></select><span id="charCount">0 / 2,000</span></div>
+      <textarea class="textarea" id="srcText" maxlength="2000" placeholder="Type or paste your sentence here…" oninput="countChars()"></textarea>
+      <div class="editor-foot"><span>⌘ Enter to translate</span><div class="tools"><button class="tool" title="Use microphone" onclick="go('speech')">🎙</button></div></div>
+    </div>
+    <div class="card editor"><div class="editor-head"><select class="select" id="tgtLang"></select><span id="statusText" style="color:#969cb0">Ready</span></div>
+      <div class="output empty" id="output">Your context-aware translation will appear here.</div>
+      <div id="translitBox" class="translit hidden"></div>
+      <div class="editor-foot"><button class="btn btn-sm" onclick="toggleTranslit()">↔ Transliteration</button><div class="tools"><button class="tool" title="Listen" onclick="listenOutput()">🔊</button><button class="tool" title="Copy" onclick="copyOutput()">⧉</button><button class="tool" title="Save" onclick="saveCurrent()">☆</button><button class="tool" title="Share" onclick="shareCurrent()">↗</button></div></div>
+    </div>
+  </div>
+  <div class="translate-bar"><button class="btn btn-brand" id="translateBtn" onclick="translateText()">Translate with context <span>→</span></button></div>
+  <div class="card card-pad context-card">
+    <div class="section-head" style="margin-bottom:5px"><div><h3>Guide the translation</h3><p class="sub">These controls become signals for the context engine.</p></div><span class="pill brand">AI CONTEXT</span></div>
+    <div style="margin-top:16px"><label style="font-size:10px;font-weight:800;color:#9298aa">DOMAIN</label><div class="chips" id="domainChips" style="margin-top:7px"></div></div>
+    <div style="margin-top:15px"><label style="font-size:10px;font-weight:800;color:#9298aa">TONE</label><div class="chips" id="toneChips" style="margin-top:7px"></div></div>
+    <div style="margin-top:15px"><label style="font-size:10px;font-weight:800;color:#9298aa">STYLE</label><div class="chips" id="styleChips" style="margin-top:7px"></div></div>
+  </div>
+  <div class="card card-pad context-card hidden" id="analysisCard">
+    <div class="section-head" style="margin-bottom:4px"><div><h3>Context analysis</h3><p class="sub">What the system inferred before translating.</p></div><span class="pill" id="confidencePill">96% confident</span></div>
+    <div class="context-grid">
+      <div class="context-item"><label>LANGUAGE</label><div id="aLang">English</div></div>
+      <div class="context-item"><label>CONTEXT</label><div id="aContext">Conversation</div></div>
+      <div class="context-item"><label>TONE</label><div id="aTone">Casual</div></div>
+      <div class="context-item"><label>CONFIDENCE</label><div id="aConf">96%</div><div class="confidence"><i id="confBar"></i></div></div>
+    </div>
+    <div class="context-item" style="margin-top:10px"><label>MEANING</label><div id="aMeaning">—</div></div>
+    <div style="margin-top:13px;padding-top:13px;border-top:1px solid var(--line)"><label style="font-size:9px;color:#9298aa;font-weight:800;letter-spacing:.1em">WHY THIS TRANSLATION?</label><div id="aWhy" style="font-size:12px;line-height:1.6;margin-top:5px;color:#59617b">—</div></div>
+  </div>
+</section>
+
+<!-- CONVERSATION -->
+<section class="page" id="page-conversation">
+  <div class="page-head"><div><span class="eyebrow">LIVE INTERPRETER</span><h1 style="margin-top:11px">Context-aware conversation</h1><p class="sub">Two languages. One shared conversation memory.</p></div><button class="btn" onclick="clearChat()">New conversation</button></div>
+  <div class="chat-shell">
+    <div class="card chat-settings"><div class="field"><label>Person A</label><select class="select" id="personA"></select></div><div class="field"><label>Person B</label><select class="select" id="personB"></select></div><div class="field"><label>Conversation tone</label><select class="select" id="chatTone"><option>Natural</option><option>Formal</option><option>Respectful</option></select></div><div style="padding:12px;background:#f3f4fa;border-radius:13px;font-size:10px;color:#68708c;line-height:1.6">Tip: keep previous messages in the thread. The context engine uses them to resolve ambiguous words.</div></div>
+    <div class="card chat"><div class="chat-head"><div><b style="font-size:13px">English ↔ Telugu</b><div style="font-size:10px;color:#9298aa;margin-top:3px">Context memory: on</div></div><span class="pill brand">AI MODE</span></div><div class="chat-body" id="chatBody"></div><div class="chat-input"><button class="tool" onclick="go('speech')">🎙</button><input id="chatInput" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendChat()"><button class="btn btn-primary" onclick="sendChat()">Send</button></div></div>
+  </div>
+</section>
+
+<!-- SPEECH -->
+<section class="page" id="page-speech">
+  <div class="page-head"><div><span class="eyebrow">SPEECH TRANSLATION</span><h1 style="margin-top:11px">Speak. Translate. Listen.</h1><p class="sub">Browser speech recognition is used when available; the backend demo endpoint remains available as a fallback.</p></div></div>
+  <div class="speech-center">
+    <div class="card panel">
+      <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap"><select class="select" id="speechSrc"><option value="auto">Auto detect</option></select><select class="select" id="speechTgt"></select></div>
+      <button class="mic" id="micBtn" onclick="toggleRecording()" aria-label="Start speech recording"><svg viewBox="0 0 24 24" fill="none"><rect x="8" y="3" width="8" height="12" rx="4" stroke="currentColor" stroke-width="1.7"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-3 0h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+      <b id="speechStatus">Tap the microphone to speak</b><div class="wave hidden" id="wave"></div>
+      <div class="result-card hidden" id="speechResult"><div class="result-row"><label>YOU SAID</label><p id="speechOriginal"></p></div><div class="result-row"><label>TRANSLATION</label><p id="speechOut" class="indic" style="font-size:18px;font-weight:700"></p><div id="speechRoman" class="translit"></div></div><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:12px"><button class="btn btn-sm" onclick="speakText(document.getElementById('speechOut').textContent)">🔊 Listen</button><button class="btn btn-sm" onclick="copyText(document.getElementById('speechOut').textContent)">Copy</button></div></div>
+    </div>
+  </div>
+</section>
+<!-- HISTORY -->
+<section class="page" id="page-history">
+  <div class="page-head"><div><span class="eyebrow">YOUR LIBRARY</span><h1 style="margin-top:11px">Translation history</h1><p class="sub">Translations are saved to MongoDB for this browser profile.</p></div><button class="btn btn-danger" onclick="clearHistory()">Clear history</button></div>
+  <div class="card panel"><div class="table-wrap"><table class="table"><thead><tr><th>Original</th><th>Translation</th><th>Languages</th><th>Mode</th><th>Time</th><th></th></tr></thead><tbody id="historyBody"></tbody></table></div></div>
+</section>
+
+<!-- SAVED -->
+<section class="page" id="page-saved">
+  <div class="page-head"><div><span class="eyebrow">BOOKMARKS</span><h1 style="margin-top:11px">Saved translations</h1><p class="sub">Keep useful phrases, replies and terminology close at hand.</p></div></div>
+  <div class="saved-grid" id="savedGrid"></div>
+</section>
+
+<!-- SETTINGS -->
+<section class="page" id="page-settings">
+  <div class="page-head"><div><span class="eyebrow">PREFERENCES</span><h1 style="margin-top:11px">Settings</h1><p class="sub">Tune BhashaBridge to your workflow.</p></div></div>
+  <div class="settings"><div class="card panel settings-nav"><button class="active">General</button><button>Translation</button><button>Accessibility</button></div><div class="card panel">
+    <div class="setting-row"><div><b>Default target language</b><p>Used when opening a new translation.</p></div><select class="select" id="prefLang"></select></div>
+    <div class="setting-row"><div><b>Auto-show transliteration</b><p>Useful when reading Indian scripts in Roman text.</p></div><button class="toggle on" id="toggleTrans" onclick="toggleSetting(this)"><i></i></button></div>
+    <div class="setting-row"><div><b>High contrast</b><p>Increase contrast for easier reading.</p></div><button class="toggle" onclick="toggleSetting(this);document.body.classList.toggle('high-contrast')"><i></i></button></div>
+    <div class="setting-row"><div><b>Demo mode</b><p>Use local sample intelligence when AI providers are not configured.</p></div><span class="pill brand">ENABLED</span></div>
+  </div></div>
+</section>
+
+<!-- ABOUT -->
+<section class="page" id="page-about">
+  <div class="about-hero"><span class="eyebrow" style="background:#ffffff12;color:#d6d3ff">ABOUT BHASHABRIDGE</span><h1 style="margin-top:16px;max-width:800px">A translation layer designed for the way India actually communicates.</h1><p style="margin-top:15px">Literal translation can miss social cues, conversational references and domain terminology. BhashaBridge makes those signals first-class inputs—then combines them with text, speech and conversation context.</p></div>
+  <div class="section"><div class="section-head"><div><h2>How it works</h2><p class="sub">A modular pipeline ready for real AI providers.</p></div></div><div class="timeline"><div><b>01 · INPUT</b><p>Text, speech or conversation enters one common workspace.</p></div><div><b>02 · UNDERSTAND</b><p>Language, conversation history, domain and tone become context signals.</p></div><div><b>03 · TRANSLATE</b><p>The translation layer generates a natural target-language rendering.</p></div><div><b>04 · DELIVER</b><p>Return native script, transliteration and speech-ready output.</p></div></div></div>
+  <div class="section"><div class="section-head"><div><h2>Project architecture</h2><p class="sub">Frontend and backend are intentionally separated so providers can be swapped without redesigning the UI.</p></div></div><div class="grid grid-3"><div class="card feature"><h3>Context service</h3><p>Analyzes history, domain, tone and style before translation.</p></div><div class="card feature"><h3>Translation service</h3><p>Orchestrates detection → context → translation → transliteration.</p></div><div class="card feature"><h3>Speech services</h3><p>Speech recognition and text-to-speech can be connected independently.</p></div></div></div>
+</section>
+</main>
+</div>
+
+<footer class="footer"><div class="footer-inner"><div><div style="font-family:Manrope;font-weight:800">BhashaBridge</div><p>Translate beyond words. Understand the context.</p></div><p>Built as a modular demo platform for Indian-language AI.</p></div></footer>
+
+<div class="toast" id="toast"></div>
+<div class="modal" id="authModal" onclick="if(event.target===this)closeModal()"><div class="modal-card"><div style="display:flex;justify-content:space-between"><div><h2>Welcome to BhashaBridge</h2><p>Use demo sign-in or connect the backend auth service.</p></div><button class="icon-btn" onclick="closeModal()">×</button></div><form class="form" onsubmit="demoLogin(event)"><input id="authName" placeholder="Your name" required><input id="authEmail" type="email" placeholder="Email" required><input id="authPassword" type="password" placeholder="Password" minlength="6" required><button class="btn btn-brand">Continue to workspace</button></form></div></div>
+
+<script>
+const LANGS=[
+['en','English','English'],['hi','Hindi','हिन्दी'],['te','Telugu','తెలుగు'],['ta','Tamil','தமிழ்'],['kn','Kannada','ಕನ್ನಡ'],['ml','Malayalam','മലയാളം'],['bn','Bengali','বাংলা'],['mr','Marathi','मराठी'],['gu','Gujarati','ગુજરાતી'],['pa','Punjabi','ਪੰਜਾਬੀ'],['or','Odia','ଓଡ଼ିଆ'],['as','Assamese','অসমীয়া'],['ur','Urdu','اردو']
+];
+const DEMO={
+te:['మీరు రేపు వస్తున్నారా?','Meeru repu vastunnara?'],
+hi:['क्या आप कल आ रहे हैं?','Kya aap kal aa rahe hain?'],
+ta:['நீங்கள் நாளை வருகிறீர்களா?','Neengal naalai varugireergalaa?'],
+kn:['ನೀವು ನಾಳೆ ಬರುತ್ತೀರಾ?','Neevu naale baruttheera?'],
+ml:['നിങ്ങൾ നാളെ വരുന്നുണ്ടോ?','Ningal naale varunnundo?'],
+bn:['আপনি কি আগামীকাল আসছেন?','Apni ki agamikal aschen?'],
+mr:['तुम्ही उद्या येत आहात का?','Tumhi udya yet ahat ka?'],
+gu:['શું તમે કાલે આવો છો?','Shu tame kale aavo cho?'],
+pa:['ਕੀ ਤੁਸੀਂ ਕੱਲ੍ਹ ਆ ਰਹੇ ਹੋ?','Ki tusi kal aa rahe ho?'],
+or:['ଆପଣ କାଲି ଆସୁଛନ୍ତି କି?','Apana kali asuchhanti ki?'],
+as:['আপুনি কালি আহিছে নেকি?','Apuni kali ahise neki?'],
+ur:['کیا آپ کل آ رہے ہیں؟','Kya aap kal aa rahe hain?'],
+en:['Are you coming tomorrow?','—']
+};
+const DOMAINS=['General','Conversation','Education','Healthcare','Travel','Business','Government','Technology','Legal','Social'];
+const TONES=['Neutral','Casual','Formal','Professional','Respectful'];
+const STYLES=['Natural','Literal','Concise','Detailed'];
+let state={domain:'Conversation',tone:'Casual',style:'Natural',target:'te',last:null,showTranslit:false,history:[],saved:[],chat:[]};
+
+function load(){try{const x=JSON.parse(localStorage.getItem('bb-state'));if(x)state={...state,...x}}catch(e){}}
+function persist(){localStorage.setItem('bb-state',JSON.stringify(state))}
+function toast(s){const t=document.getElementById('toast');t.textContent=s;t.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove('show'),2200)}
+function copyText(s){if(!s||s==='—')return toast('Nothing to copy yet');navigator.clipboard?.writeText(s);toast('Copied to clipboard')}
+function speakText(s){if(!s||s==='—')return toast('Nothing to play yet');if(!('speechSynthesis'in window))return toast('Speech playback is not supported here');speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(s))}
+function go(page){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+page)?.classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));document.getElementById('crumb').textContent=page[0].toUpperCase()+page.slice(1);window.scrollTo({top:0,behavior:'smooth'});if(page==='history')renderHistory();if(page==='saved')renderSaved();if(page==='home')renderHome();mobileNav(false)}
+function toggleMobile(){const old=document.querySelector('.sidebar');if(old){old.style.display=old.style.display==='flex'?'none':'flex';old.style.width='258px';old.querySelectorAll('.logo-name,.logo-sub,.nav-label,.nav button span,.profile-text').forEach(x=>x.style.display='block')}}
+function mobileNav(close){if(innerWidth<=760&&!close)return}
+function closeModal(){document.getElementById('authModal').classList.remove('open')}
+function openModal(){document.getElementById('authModal').classList.add('open')}
+function demoLogin(e){e.preventDefault();const n=document.getElementById('authName').value;document.getElementById('sideName').textContent=n;document.getElementById('avatar').textContent=n[0].toUpperCase();closeModal();toast('Welcome, '+n+'!');localStorage.setItem('bb-user',n)}
+function setupSelect(id,auto=false){const s=document.getElementById(id);if(!s)return;s.innerHTML=auto?'<option value="auto">Auto detect</option>':'';LANGS.forEach(l=>{const o=document.createElement('option');o.value=l[0];o.textContent=l[1]+' — '+l[2];s.appendChild(o)});s.value=id==='tgtLang'||id==='speechTgt'||id==='prefLang'?(state.target||'te'):(id==='personA'?'en':id==='personB'?'te':'auto')}
+function setup(){load();['srcLang','speechSrc'].forEach(id=>setupSelect(id,true));['tgtLang','speechTgt','prefLang','personA','personB'].forEach(id=>setupSelect(id));document.getElementById('tgtLang').value=state.target;document.getElementById('speechTgt').value=state.target;document.getElementById('prefLang').value=state.target;
+  buildChips('domainChips',DOMAINS,'domain');buildChips('toneChips',TONES,'tone');buildChips('styleChips',STYLES,'style');renderHome();renderChat();renderHistory();renderSaved();loadServerHistory();
+  const u=localStorage.getItem('bb-user');if(u){document.getElementById('sideName').textContent=u;document.getElementById('avatar').textContent=u[0].toUpperCase()}
+  document.getElementById('srcText').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter')translateText()});
+}
+function buildChips(id,arr,key){const c=document.getElementById(id);c.innerHTML='';arr.forEach(v=>{const b=document.createElement('button');b.className='chip '+(state[key]===v?'active':'');b.textContent=v;b.onclick=()=>{state[key]=v;c.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');persist()};c.appendChild(b)})}
+function renderHome(){const c=document.getElementById('homeLangs');if(!c)return;c.innerHTML='';LANGS.filter(x=>x[0]!=='en').forEach(l=>{const d=document.createElement('div');d.className='lang';d.innerHTML='<b>'+l[1]+'</b><span>'+l[2]+'</span>';c.appendChild(d)})}
+function countChars(){const n=document.getElementById('srcText').value.length;document.getElementById('charCount').textContent=n+' / 2,000'}
+function clearTranslator(){document.getElementById('srcText').value='';document.getElementById('output').className='output empty';document.getElementById('output').textContent='Your context-aware translation will appear here.';document.getElementById('translitBox').classList.add('hidden');document.getElementById('analysisCard').classList.add('hidden');countChars()}
+function demoFor(target,text){if(/where is|railway|station/i.test(text)){const map={te:['సమీపంలోని రైల్వే స్టేషన్ ఎక్కడ ఉంది?','Sameepamloni railway station ekkada undi?'],hi:['निकटतम रेलवे स्टेशन कहाँ है?','Nikattam railway station kahan hai?'],ta:['அருகிலுள்ள ரயில் நிலையம் எங்கே உள்ளது?','Arugilulla rayil nilaiyam enge ullathu?']};return map[target]||DEMO[target]||DEMO.te}if(/hello|hi\b/i.test(text)){const map={te:['హలో! ఎలా ఉన్నారు?','Halo! Ela unnaru?'],hi:['नमस्ते! आप कैसे हैं?','Namaste! Aap kaise hain?'],ta:['வணக்கம்! எப்படி இருக்கிறீர்கள்?','Vanakkam! Eppadi irukkireergal?']};return map[target]||DEMO[target]||DEMO.te}return DEMO[target]||[text,'']}
+const CLIENT_ID_KEY='bb-client-id';
+function getClientId(){let id=localStorage.getItem(CLIENT_ID_KEY);if(!id){id=(crypto.randomUUID?crypto.randomUUID():'bb-'+Date.now()+'-'+Math.random().toString(36).slice(2));localStorage.setItem(CLIENT_ID_KEY,id)}return id}
+async function api(path,body,method='POST'){try{const r=await fetch('/api'+path,{method,headers:{'Content-Type':'application/json','X-Client-Id':getClientId()},body:method==='GET'?undefined:JSON.stringify(body||{})});const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error(data.error||'Request failed');return data}catch(e){toast(e.message||'Request failed');return null}}
+async function translateText(){
+ const text=document.getElementById('srcText').value.trim();if(!text)return toast('Type something to translate first.');
+ const target=document.getElementById('tgtLang').value;state.target=target;persist();
+ const btn=document.getElementById('translateBtn');btn.disabled=true;document.getElementById('statusText').textContent='AI is translating…';
+ const out=document.getElementById('output');out.className='output';out.textContent='Understanding context and translating…';
+ const res=await api('/translate',{text,sourceLang:document.getElementById('srcLang').value,targetLang:target,history:state.chat.map(x=>x.orig),domain:state.domain,tone:state.tone,style:state.style});
+ if(!res){btn.disabled=false;document.getElementById('statusText').textContent='Error';out.textContent='Unable to translate right now. Check that the backend is running and try again.';return}
+ const tr=res.translation||'';const roman=res.transliteration||'';const conf=Math.round((res.confidence||.9)*100);
+ state.last={orig:text,trans:tr,roman,src:res.sourceLanguage||document.getElementById('srcLang').value,tgt:target,mode:'Text',domain:state.domain,tone:res.tone||state.tone,context:res.context,id:res.historyId||null};
+ state.history.unshift({...state.last,time:new Date().toLocaleString()});state.history=state.history.slice(0,100);persist();
+ out.innerHTML='<div class="indic" style="font-size:18px;font-weight:700">'+escapeHtml(tr)+'</div>';
+ document.getElementById('translitBox').textContent=roman?'Roman transliteration: '+roman:'';document.getElementById('translitBox').classList.toggle('hidden',!state.showTranslit||!roman);
+ document.getElementById('statusText').textContent='Translated with AI';document.getElementById('analysisCard').classList.remove('hidden');
+ document.getElementById('aLang').textContent=langName(res.sourceLanguage||'en');document.getElementById('aContext').textContent=res.context||state.domain;document.getElementById('aTone').textContent=res.tone||state.tone;document.getElementById('aConf').textContent=conf+'%';document.getElementById('confidencePill').textContent=conf+'% confident';document.getElementById('confBar').style.width=conf+'%';document.getElementById('aMeaning').textContent=res.meaning||'—';document.getElementById('aWhy').textContent=res.explanation||'—';
+ btn.disabled=false;renderHistory();toast('Translation completed with AI');
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function toggleTranslit(){state.showTranslit=!state.showTranslit;persist();if(state.last){document.getElementById('translitBox').classList.toggle('hidden',!state.showTranslit);}}
+function copyOutput(){copyText(state.last?.trans)}
+function listenOutput(){speakText(state.last?.trans)}
+function saveCurrent(){if(!state.last)return toast('Translate something first.');state.saved.unshift({...state.last,time:new Date().toLocaleDateString()});state.saved=state.saved.slice(0,50);persist();renderSaved();toast('Saved to your library')}
+function shareCurrent(){if(!state.last)return toast('Translate something first.');if(navigator.share)navigator.share({title:'BhashaBridge translation',text:state.last.trans}).catch(()=>{});else copyText(state.last.trans)}
+function renderHistory(){const b=document.getElementById('historyBody');if(!b)return;b.innerHTML='';if(!state.history.length){b.innerHTML='<tr><td colspan="6" style="padding:35px;text-align:center;color:#9aa0b2">No translations yet. Start with the translator.</td></tr>';return}state.history.forEach((h,i)=>{const tr=document.createElement('tr');tr.innerHTML='<td><div class="truncate">'+escapeHtml(h.orig)+'</div></td><td><div class="truncate indic">'+escapeHtml(h.trans)+'</div></td><td>'+langName(h.src)+' → '+langName(h.tgt)+'</td><td>'+h.mode+'</td><td>'+h.time+'</td><td><button class="btn btn-sm" onclick="copyText('+JSON.stringify(h.trans)+')">Copy</button> <button class="btn btn-sm btn-danger" onclick="deleteHistory('+i+')">Delete</button></td>';b.appendChild(tr)})}
+async function deleteHistory(i){const item=state.history[i];if(item?.id){await api('/history/'+item.id,null,'DELETE')}state.history.splice(i,1);persist();renderHistory();toast('Removed from history')}
+async function clearHistory(){await api('/history',null,'DELETE');state.history=[];persist();renderHistory();toast('History cleared')}
+async function loadServerHistory(){try{const items=await api('/history',null,'GET');if(Array.isArray(items)&&items.length){state.history=items.map(x=>({id:x._id,orig:x.originalText,trans:x.translatedText,roman:x.transliteration||'',src:x.sourceLanguage,tgt:x.targetLanguage,mode:x.inputType==='text'?'Text':x.inputType,domain:x.domain||'General',tone:x.tone||'Neutral',context:x.context,time:new Date(x.createdAt).toLocaleString()}));persist();renderHistory()}}catch(e){}}
+function renderSaved(){const c=document.getElementById('savedGrid');if(!c)return;c.innerHTML='';if(!state.saved.length){c.innerHTML='<div class="card panel" style="grid-column:1/-1;text-align:center;color:#969cb0">Nothing saved yet. Use ☆ after a translation.</div>';return}state.saved.forEach((s,i)=>{const d=document.createElement('div');d.className='card saved-card';d.innerHTML='<div style="font-size:13px">'+escapeHtml(s.orig)+'</div><div class="saved-arrow">↓</div><div class="indic" style="font-size:17px;font-weight:700">'+escapeHtml(s.trans)+'</div><div class="saved-meta"><span class="mini-pill">'+langName(s.src)+' → '+langName(s.tgt)+'</span><span class="mini-pill">'+s.domain+'</span><span class="mini-pill">'+s.tone+'</span></div><div style="display:flex;gap:7px;margin-top:14px"><button class="btn btn-sm" onclick="copyText('+JSON.stringify(s.trans)+')">Copy</button><button class="btn btn-sm" onclick="speakText('+JSON.stringify(s.trans)+')">🔊</button><button class="btn btn-sm btn-danger" onclick="removeSaved('+i+')">Remove</button></div>';c.appendChild(d)})}
+function removeSaved(i){state.saved.splice(i,1);persist();renderSaved();toast('Removed from saved')}
+function langName(code){return LANGS.find(x=>x[0]===code)?.[1]||code}
+function clearChat(){state.chat=[];persist();renderChat()}
+function renderChat(){const b=document.getElementById('chatBody');if(!b)return;if(!state.chat.length)state.chat=[{who:'A',orig:'I went to the bank yesterday.',trans:'నేను నిన్న బ్యాంకుకు వెళ్లాను.',ctx:'Financial institution'},{who:'B',orig:'Which bank?',trans:'ఏ బ్యాంకు?',ctx:'Follow-up context'}];b.innerHTML='';state.chat.forEach(m=>{const d=document.createElement('div');d.className='msg '+(m.who==='A'?'a':'b');d.innerHTML=escapeHtml(m.orig)+'<br><strong class="indic">'+escapeHtml(m.trans)+'</strong><small>Context: '+escapeHtml(m.ctx||'Conversation')+'</small>';b.appendChild(d)});b.scrollTop=b.scrollHeight}
+async function sendChat(){const input=document.getElementById('chatInput'),text=input.value.trim();if(!text)return;const who=state.chat.length%2===0?'A':'B';const target=who==='A'?document.getElementById('personB').value:document.getElementById('personA').value;input.value='';const res=await api('/conversation/message',{speaker:who,text,languageA:document.getElementById('personA').value,languageB:document.getElementById('personB').value});const d=demoFor(target,text);state.chat.push({who,orig:text,trans:res?.translation&&!res.translation.startsWith('[demo]')?res.translation:d[0],ctx:res?.context||state.domain});persist();renderChat()}
+let recognition=null;
+function toggleRecording(){if(recognition){recognition.stop();return}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return fallbackSpeech();recognition=new SR();recognition.lang='en-IN';recognition.interimResults=false;recognition.maxAlternatives=1;const btn=document.getElementById('micBtn');btn.classList.add('recording');document.getElementById('speechStatus').textContent='Listening…';document.getElementById('wave').classList.remove('hidden');document.getElementById('wave').innerHTML=Array.from({length:14},(_,i)=>'<i style="animation-delay:'+i*.05+'s"></i>').join('');recognition.onresult=e=>{const text=e.results[0][0].transcript;processSpeech(text)};recognition.onerror=()=>fallbackSpeech();recognition.onend=()=>{recognition=null;btn.classList.remove('recording');document.getElementById('wave').classList.add('hidden');};recognition.start()}
+async function fallbackSpeech(){document.getElementById('speechStatus').textContent='Using demo speech sample…';await new Promise(r=>setTimeout(r,800));processSpeech('Where is the nearest railway station?')}
+async function processSpeech(text){
+ const target=document.getElementById('speechTgt').value;document.getElementById('speechStatus').textContent='Translating with AI…';
+ const res=await api('/translate',{text,sourceLang:document.getElementById('speechSrc').value,targetLang:target,history:state.chat.map(x=>x.orig),domain:'Conversation',tone:'Natural',style:'Natural'});
+ if(!res)return;
+ document.getElementById('speechOriginal').textContent=text;document.getElementById('speechOut').textContent=res.translation||'';document.getElementById('speechRoman').textContent='Roman transliteration: '+(res.transliteration||'');document.getElementById('speechResult').classList.remove('hidden');document.getElementById('speechStatus').textContent='Translation ready';
+ state.history.unshift({orig:text,trans:res.translation,src:res.sourceLanguage||'en',tgt:target,mode:'Speech',time:new Date().toLocaleString(),domain:'Conversation',tone:res.tone||'Natural'});state.history=state.history.slice(0,100);persist();renderHistory();
+}
+function toggleSetting(btn){btn.classList.toggle('on')}
+function setupMobile(){if(innerWidth<=760){document.querySelector('.sidebar').style.display='none'}}
+setupMobile();setup();go('home');
+</script>
+</body></html>
